@@ -26,11 +26,11 @@ function getElementRecommendation(monsters: Monster[]) {
         (accumulator[element] || 0) + monster.quantidade_no_mapa;
       return accumulator;
     },
-    {},
+    {}
   );
   const dominantElement =
     Object.entries(weights).sort(
-      ([, firstWeight], [, secondWeight]) => secondWeight - firstWeight,
+      ([, firstWeight], [, secondWeight]) => secondWeight - firstWeight
     )[0]?.[0] || "Neutral";
   const counterElement = ELEMENT_COUNTERS[dominantElement];
 
@@ -85,7 +85,7 @@ function formatNumber(value: number) {
 }
 
 function App() {
-  const [characterLevel, setCharacterLevel] = useState("190");
+  const [characterLevel, setCharacterLevel] = useState("180");
   const [selectedMap, setSelectedMap] = useState("todos");
   const [viewMode, setViewMode] = useState<"cards" | "list">("cards");
   const level = Number(characterLevel) || 0;
@@ -113,7 +113,7 @@ function App() {
             .filter(
               ({ difference }) =>
                 difference >= MIN_LEVEL_DIFFERENCE &&
-                difference <= MAX_LEVEL_DIFFERENCE,
+                difference <= MAX_LEVEL_DIFFERENCE
             )
             .sort((first, second) => second.adjustedExp - first.adjustedExp),
         }))
@@ -122,12 +122,12 @@ function App() {
           elementRecommendation: getElementRecommendation(map.monstros),
         }))
         .filter(({ monstros }) => monstros.length > 0),
-    [level, selectedMap],
+    [level, selectedMap]
   );
 
   const totalMonsters = monstersByMap.reduce(
     (total, map) => total + map.monstros.length,
-    0,
+    0
   );
 
   return (
@@ -142,13 +142,26 @@ function App() {
         <section className="controls" aria-label="Filtros da busca">
           <label className="level-control">
             <span>Nível do personagem</span>
-            <input
+            <select
+              defaultValue={characterLevel}
+              value={characterLevel}
+              onChange={(event) => setCharacterLevel(event.target.value)}
+            >
+              {Array.from({ length: 250 }, (_, index) => index + 1).map(
+                (level) => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                )
+              )}
+            </select>
+            {/* <input
               type="number"
               min="1"
               max="999"
               value={characterLevel}
               onChange={(event) => setCharacterLevel(event.target.value)}
-            />
+            /> */}
           </label>
           <label className="map-control">
             <span>Mapa</span>
@@ -223,7 +236,9 @@ function App() {
                   </div>
                 </div>
                 <div
-                  className={`monster-grid ${viewMode === "list" ? "monster-list" : ""}`}
+                  className={`monster-grid ${
+                    viewMode === "list" ? "monster-list" : ""
+                  }`}
                 >
                   {monstros.map((monster) => (
                     <article
@@ -248,7 +263,9 @@ function App() {
                       </div>
                       <div className="status-line">
                         <span
-                          className={`status status-${monster.status.split(" ")[1]}`}
+                          className={`status status-${
+                            monster.status.split(" ")[1]
+                          }`}
                         >
                           {monster.status}
                         </span>
@@ -302,7 +319,7 @@ function App() {
                   ))}
                 </div>
               </section>
-            ),
+            )
           )
         )}
       </div>
