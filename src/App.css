@@ -175,6 +175,7 @@ h1 {
   cursor: pointer;
   font-size: 12px;
   padding: 0 13px;
+  flex: 1;
 }
 .view-toggle button:hover,
 .view-toggle button.is-active {
@@ -449,8 +450,11 @@ h1 {
   }
   .controls {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 1fr 1fr;
     margin-top: 32px;
+  }
+  .level-control span {
+    text-wrap: nowrap;
   }
   .level-control,
   .map-control {

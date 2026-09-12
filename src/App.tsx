@@ -155,13 +155,6 @@ function App() {
                 )
               )}
             </select>
-            {/* <input
-              type="number"
-              min="1"
-              max="999"
-              value={characterLevel}
-              onChange={(event) => setCharacterLevel(event.target.value)}
-            /> */}
           </label>
           <label className="map-control">
             <span>Mapa</span>
