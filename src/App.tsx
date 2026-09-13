@@ -86,9 +86,26 @@ function formatNumber(value: number) {
 
 function App() {
   const [characterLevel, setCharacterLevel] = useState("180");
+  const [draftCharacterLevel, setDraftCharacterLevel] = useState("180");
   const [selectedMap, setSelectedMap] = useState("todos");
+  const [draftSelectedMap, setDraftSelectedMap] = useState("todos");
   const [viewMode, setViewMode] = useState<"cards" | "list">("cards");
+  const [isLoading, setIsLoading] = useState(false);
   const level = Number(characterLevel) || 0;
+
+  const handleConfirmSelection = () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    window.setTimeout(() => {
+      setCharacterLevel(draftCharacterLevel);
+      setSelectedMap(draftSelectedMap);
+      setIsLoading(false);
+    }, 500);
+  };
 
   const monstersByMap = useMemo(
     () =>
@@ -143,9 +160,8 @@ function App() {
           <label className="level-control">
             <span>Nível do personagem</span>
             <select
-              defaultValue={characterLevel}
-              value={characterLevel}
-              onChange={(event) => setCharacterLevel(event.target.value)}
+              value={draftCharacterLevel}
+              onChange={(event) => setDraftCharacterLevel(event.target.value)}
             >
               {Array.from({ length: 250 }, (_, index) => index + 1).map(
                 (level) => (
@@ -159,8 +175,8 @@ function App() {
           <label className="map-control">
             <span>Mapa</span>
             <select
-              value={selectedMap}
-              onChange={(event) => setSelectedMap(event.target.value)}
+              value={draftSelectedMap}
+              onChange={(event) => setDraftSelectedMap(event.target.value)}
             >
               <option value="todos">Todos os mapas</option>
               {maps.map((map) => (
@@ -170,6 +186,14 @@ function App() {
               ))}
             </select>
           </label>
+          <button
+            type="button"
+            className="confirm-selection"
+            onClick={handleConfirmSelection}
+            disabled={isLoading}
+          >
+            {isLoading ? "Carregando..." : "Confirmar seleção"}
+          </button>
           <div
             className="view-toggle"
             role="group"
@@ -205,7 +229,14 @@ function App() {
       </header>
 
       <div className="map-list">
-        {monstersByMap.length === 0 ? (
+        {isLoading ? (
+          <div className="empty-state loading-state" role="status">
+            <strong>Atualizando resultados...</strong>
+            <span>
+              Calculando os monstros mais adequados para a sua seleção.
+            </span>
+          </div>
+        ) : monstersByMap.length === 0 ? (
           <div className="empty-state" role="status">
             <strong>Não há informações para sua seleção.</strong>
             <span>Tente outro nível ou escolha outro mapa.</span>

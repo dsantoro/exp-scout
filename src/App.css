@@ -147,6 +147,34 @@ h1 {
 .map-control {
   width: 280px;
 }
+.confirm-selection {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 4px;
+  background: rgba(123, 89, 169, 0.9);
+  color: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  align-self: end;
+}
+.confirm-selection:hover:not(:disabled) {
+  background: rgba(108, 72, 156, 0.96);
+}
+.confirm-selection:disabled {
+  cursor: wait;
+  opacity: 0.85;
+}
+.confirm-selection:focus-visible {
+  outline: 2px solid #9f75c7;
+  outline-offset: 2px;
+}
 .view-toggle {
   display: grid;
   gap: 8px;
@@ -228,6 +256,9 @@ h1 {
 }
 .empty-state span {
   font-size: 13px;
+}
+.loading-state {
+  min-height: 220px;
 }
 .map-section + .map-section {
   margin-top: 58px;
@@ -439,6 +470,28 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+@media (max-width: 768px) {
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 32px;
+  }
+  .level-control span {
+    text-wrap: nowrap;
+  }
+  .level-control,
+  .map-control {
+    width: auto;
+  }
+  .confirm-selection {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+  .view-toggle {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 620px) {
   .page-header {
     padding: 26px 20px 24px;
@@ -459,6 +512,10 @@ h1 {
   .level-control,
   .map-control {
     width: auto;
+  }
+  .confirm-selection {
+    grid-column: 1 / -1;
+    width: 100%;
   }
   .view-toggle {
     grid-column: 1 / -1;
