@@ -128,7 +128,7 @@ h1 {
 }
 .controls input,
 .controls select {
-  min-height: 48px;
+  height: 48px;
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.72);
